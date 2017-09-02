@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Busca CEP - Com JQuery</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="../assets/css/bootstrap.min.css">
+</head>
+<body>
+	<div class="container">
+		<h1>Busca CEP</h1>
+		<hr>
+		<form action="gravacep.php" method="post">
+		<div class="row">
+			<div class="form-group col-md-2">
+				<label>Digite o CEP</label>
+				<input type="text" name="cep" id='cep' class="form-control">
+			</div>
+		</div>
+		<hr>
+		<div class="row">
+			<div class="form-group col-md-4">
+				<label>Endereço</label>
+				<input type="text" name="endereco" id='endereco' class="form-control">
+			</div>
+			<div class="form-group col-md-3">
+				<label>Bairro</label>
+				<input type="text" name="bairro" id='bairro' class="form-control">
+			</div>
+			<div class="form-group col-md-3">
+				<label>Cidade</label>
+				<input type="text" name="cidade" id='cidade' class="form-control">
+			</div>
+			<div class="form-group col-md-2">
+				<label>UF</label>
+				<select name="uf" id="uf" class="form-control">
+					<option value="AC">AC</option>
+					<option value="AL">AL</option>
+					<option value="AM">AM</option>
+					<option value="AP">AP</option>
+					<option value="BA">BA</option>
+					<option value="CE">CE</option>
+					<option value="DF">DF</option>
+					<option value="ES">ES</option>
+					<option value="GO">GO</option>
+					<option value="MA">MA</option>
+					<option value="MG">MG</option>
+					<option value="MS">MS</option>
+					<option value="MT">MT</option>
+					<option value="PA">PA</option>
+					<option value="PB">PB</option>
+					<option value="PE">PE</option>
+					<option value="PI">PI</option>
+					<option value="PR">PR</option>
+					<option value="RJ">RJ</option>
+					<option value="RN">RN</option>
+					<option value="RO">RO</option>
+					<option value="RR">RR</option>
+					<option value="RS">RS</option>
+					<option value="SC">SC</option>
+					<option value="SE">SE</option>
+					<option value="SP">SP</option>
+					<option value="TO">TO</option>
+				</select>
+			</div>
+			<div class="form-group col-md-4">
+				<label>Complemento</label>
+				<input type="text" name="complemento" id='complemento' class="form-control">
+			</div>
+
+		</div>
+			<button class="btn btn-primary">Enviar</button>
+	</div>
+<script src="../assets/js/jquery-3.2.1.min.js"></script>
+<script src="../assets/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#cep").blur(function(){
+		let cep = $("#cep").val();
+			$.ajax({
+				url: "https://viacep.com.br/ws/" + cep +"/json",
+				beforeSend: function(xhr){
+
+				},
+				complete: function(res){
+					console.log(res.responseJSON);
+					$("#endereco").val(res.responseJSON.logradouro);
+					$("#bairro").val(res.responseJSON.bairro);
+					$("#cidade").val(res.responseJSON.localidade);
+					$("#complemento").val(res.responseJSON.complemento);
+					$("#uf").val(res.responseJSON.uf);
+				}
+			});
+		});
+
+
+	});
+
+</script>
+
+</body>
+</html>
